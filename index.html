@@ -1,0 +1,1780 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ELVASTOR BUILDING – Société de Construction et Travaux Divers</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800;900&family=Lora:ital,wght@0,400;0,600;1,400&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --navy: #0d1b2a;
+      --steel: #2a4a6e;
+      --sky: #3b7dc4;
+      --ice: #8fb8d9;
+      --gold: #c9a84c;
+      --light: #f4f0e8;
+      --white: #ffffff;
+      --gray: #8a8f99;
+    }
+
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Lora', serif;
+      background: var(--navy);
+      color: var(--light);
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.3;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 5vw;
+      background: rgba(13, 27, 42, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(59, 125, 196, 0.2);
+    }
+
+    .nav-logo {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 1.4rem;
+      letter-spacing: 0.06em;
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    .nav-logo span {
+      color: var(--sky);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600;
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ice);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--gold);
+    }
+
+    /* ── HERO ── */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+    }
+
+    .hero-left {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 9rem 3vw 6rem 5vw;
+      background: var(--navy);
+    }
+
+    .hero-left::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 3px;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent 0%, var(--gold) 30%, var(--sky) 70%, transparent 100%);
+      z-index: 3;
+    }
+
+    .hero-right {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-right-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(145deg, #0b2033 0%, #1b4060 45%, #0d1b2a 100%);
+    }
+
+    .hero-right::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 30%;
+      background: linear-gradient(to top, rgba(13, 27, 42, 0.95), transparent);
+      z-index: 2;
+    }
+
+    .hero-badge {
+      position: absolute;
+      top: 2.5rem;
+      right: 2.5rem;
+      z-index: 5;
+      border: 1px solid rgba(201, 168, 76, 0.5);
+      padding: 1.1rem 1.5rem;
+      text-align: center;
+      background: rgba(13, 27, 42, 0.8);
+      backdrop-filter: blur(10px);
+      animation: fadeUp 1s 0.8s ease forwards;
+      opacity: 0;
+    }
+
+    .hero-badge-num {
+      font-family: "Barlow Condensed", sans-serif;
+      font-weight: 900;
+      font-size: 2.4rem;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .hero-badge-label {
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ice);
+      margin-top: 0.3rem;
+    }
+
+    .hero-grid-right {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background-image: linear-gradient(rgba(59, 125, 196, 0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(59, 125, 196, 0.07) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: gridPan 25s linear infinite;
+    }
+
+    @keyframes gridPan {
+      from {
+        transform: translateY(0);
+      }
+
+      to {
+        transform: translateY(50px);
+      }
+    }
+
+    .hero-tag {
+      font-family: "Barlow Condensed", sans-serif;
+      font-weight: 600;
+      font-size: 0.72rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.1s ease forwards;
+    }
+
+    .hero-tag::before {
+      content: "";
+      display: block;
+      width: 36px;
+      height: 1px;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+
+    h1 {
+      font-family: "Barlow Condensed", sans-serif;
+      font-weight: 900;
+      font-size: clamp(2.8rem, 4.5vw, 5rem);
+      line-height: 0.93;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.25s ease forwards;
+    }
+
+    h1 .accent {
+      color: var(--sky);
+    }
+
+    h1 .line-gold {
+      color: var(--gold);
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-divider {
+      width: 50px;
+      height: 2px;
+      background: linear-gradient(to right, var(--gold), var(--sky));
+      margin-bottom: 1.8rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.4s ease forwards;
+    }
+
+    .hero-desc {
+      font-size: 0.9rem;
+      line-height: 1.85;
+      color: rgba(143, 184, 217, 0.82);
+      max-width: 400px;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.45s ease forwards;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.6s ease forwards;
+    }
+
+    .btn-primary {
+      font-family: "Barlow Condensed", sans-serif;
+      font-weight: 700;
+      font-size: 0.82rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.95rem 2.2rem;
+      background: var(--sky);
+      color: var(--white);
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      position: relative;
+      transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+      box-shadow: 0 4px 20px rgba(59, 125, 196, 0.3);
+    }
+
+    .btn-primary::after {
+      content: "";
+      position: absolute;
+      bottom: -4px;
+      right: -4px;
+      width: 100%;
+      height: 100%;
+      border: 1px solid rgba(59, 125, 196, 0.4);
+      transition: all 0.3s;
+      pointer-events: none;
+    }
+
+    .btn-primary:hover {
+      background: var(--gold);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(201, 168, 76, 0.3);
+    }
+
+    .btn-primary:hover::after {
+      border-color: rgba(201, 168, 76, 0.5);
+      bottom: -6px;
+      right: -6px;
+    }
+
+    .btn-outline {
+      font-family: "Barlow Condensed", sans-serif;
+      font-weight: 700;
+      font-size: 0.82rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.95rem 2.2rem;
+      background: transparent;
+      color: var(--ice);
+      border: 1px solid rgba(143, 184, 217, 0.35);
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: border-color 0.3s, color 0.3s, transform 0.2s;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      transform: translateY(-2px);
+    }
+
+    .hero-stats-left {
+      display: flex;
+      margin-top: 3rem;
+      border-top: 1px solid rgba(59, 125, 196, 0.2);
+      padding-top: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.75s ease forwards;
+    }
+
+    .stat-item {
+      flex: 1;
+      padding-right: 1.2rem;
+      border-right: 1px solid rgba(59, 125, 196, 0.15);
+      margin-right: 1.2rem;
+    }
+
+    .stat-item:last-child {
+      border-right: none;
+      padding-right: 0;
+      margin-right: 0;
+    }
+
+    .stat-num {
+      font-family: "Barlow Condensed", sans-serif;
+      font-weight: 900;
+      font-size: 2rem;
+      color: var(--sky);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-top: 0.3rem;
+      line-height: 1.35;
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray);
+      animation: fadeUp 1s 1.2s ease forwards;
+      opacity: 0;
+    }
+
+    .hero-scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--sky), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+
+      0%,
+      100% {
+        opacity: 0.4;
+        transform: scaleY(1)
+      }
+
+      50% {
+        opacity: 1;
+        transform: scaleY(1.2)
+      }
+    }
+
+    /* ── SECTIONS COMMON ── */
+    section {
+      padding: 7rem 5vw;
+    }
+
+    .section-tag {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600;
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .section-tag::before {
+      content: '';
+      display: block;
+      width: 30px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      text-transform: uppercase;
+      line-height: 0.95;
+      color: var(--white);
+      margin-bottom: 1.5rem;
+    }
+
+    h2 span {
+      color: var(--sky);
+    }
+
+    /* ── À PROPOS ── */
+    #apropos {
+      background: linear-gradient(180deg, var(--navy) 0%, #101f30 100%);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .about-visual {
+      position: relative;
+    }
+
+    .about-card {
+      background: linear-gradient(135deg, var(--steel), #1a3350);
+      border: 1px solid rgba(59, 125, 196, 0.3);
+      padding: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-card::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      width: 60px;
+      height: 60px;
+      border-top: 3px solid var(--gold);
+      border-left: 3px solid var(--gold);
+    }
+
+    .about-card::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      width: 60px;
+      height: 60px;
+      border-bottom: 3px solid var(--sky);
+      border-right: 3px solid var(--sky);
+    }
+
+    .about-card-year {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 5rem;
+      color: rgba(59, 125, 196, 0.15);
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+
+    .about-card-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+    }
+
+    .about-card-text {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--ice);
+    }
+
+    .about-text p {
+      color: rgba(244, 240, 232, 0.8);
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+    }
+
+    .about-values {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .value-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.7rem;
+      padding: 1rem;
+      border: 1px solid rgba(59, 125, 196, 0.15);
+      background: rgba(42, 74, 110, 0.15);
+    }
+
+    .value-icon {
+      font-size: 1.3rem;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    .value-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ice);
+    }
+
+    /* ── SERVICES ── */
+    #services {
+      background: #0a1520;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #services::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1px;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent, rgba(59, 125, 196, 0.2), transparent);
+    }
+
+    .services-header {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 5rem;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(59, 125, 196, 0.15);
+    }
+
+    .service-card {
+      background: #0a1520;
+      padding: 2.5rem 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.4s;
+      cursor: default;
+    }
+
+    .service-card:hover {
+      background: rgba(42, 74, 110, 0.4);
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--sky);
+      transition: width 0.4s ease;
+    }
+
+    .service-card:hover::before {
+      width: 100%;
+    }
+
+    .service-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 3rem;
+      color: rgba(59, 125, 196, 0.1);
+      line-height: 1;
+      margin-bottom: 1rem;
+      transition: color 0.4s;
+    }
+
+    .service-card:hover .service-num {
+      color: rgba(59, 125, 196, 0.2);
+    }
+
+    .service-icon {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .service-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 0.8rem;
+    }
+
+    .service-desc {
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: var(--gray);
+    }
+
+    /* ── EXPERTISES ── */
+    #expertises {
+      background: var(--navy);
+    }
+
+    .expertise-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .expertise-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .exp-item {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 1.2rem 1.5rem;
+      border-bottom: 1px solid rgba(59, 125, 196, 0.12);
+      transition: background 0.3s, padding-left 0.3s;
+      cursor: default;
+    }
+
+    .exp-item:first-child {
+      border-top: 1px solid rgba(59, 125, 196, 0.12);
+    }
+
+    .exp-item:hover {
+      background: rgba(42, 74, 110, 0.25);
+      padding-left: 2.2rem;
+    }
+
+    .exp-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--sky);
+      flex-shrink: 0;
+      transition: background 0.3s;
+    }
+
+    .exp-item:hover .exp-dot {
+      background: var(--gold);
+    }
+
+    .exp-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: 0.06em;
+      color: var(--ice);
+      text-transform: uppercase;
+    }
+
+    .expertise-visual {
+      position: sticky;
+      top: 7rem;
+    }
+
+    .exp-showcase {
+      background: linear-gradient(135deg, var(--steel) 0%, #162d47 100%);
+      border: 1px solid rgba(59, 125, 196, 0.3);
+      padding: 2.5rem;
+      position: relative;
+    }
+
+    .exp-showcase-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 1.8rem;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+
+    .exp-showcase-sub {
+      font-size: 0.85rem;
+      color: var(--ice);
+      margin-bottom: 2rem;
+      font-style: italic;
+    }
+
+    .exp-bars {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .exp-bar-item {}
+
+    .exp-bar-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600;
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 0.4rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .exp-bar-label span {
+      color: var(--sky);
+    }
+
+    .exp-bar-track {
+      height: 4px;
+      background: rgba(59, 125, 196, 0.15);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .exp-bar-fill {
+      height: 100%;
+      background: linear-gradient(to right, var(--sky), var(--gold));
+      animation: barGrow 1.5s cubic-bezier(0.4, 0, 0.2, 1) both;
+      transform-origin: left;
+    }
+
+    @keyframes barGrow {
+      from {
+        transform: scaleX(0);
+      }
+
+      to {
+        transform: scaleX(1);
+      }
+    }
+
+    /* ── ENGAGEMENT ── */
+    #engagement {
+      background: linear-gradient(135deg, var(--steel) 0%, #0d1b2a 60%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .engagement-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(59, 125, 196, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59, 125, 196, 0.05) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    .engagement-content {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .engagement-text p {
+      color: rgba(244, 240, 232, 0.8);
+      line-height: 1.8;
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .engagement-pillars {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .pillar {
+      padding: 2rem 1.5rem;
+      border: 1px solid rgba(59, 125, 196, 0.25);
+      background: rgba(13, 27, 42, 0.5);
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .pillar:hover {
+      border-color: rgba(201, 168, 76, 0.5);
+      transform: translateY(-4px);
+    }
+
+    .pillar-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .pillar-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+
+    .pillar-desc {
+      font-size: 0.82rem;
+      line-height: 1.6;
+      color: var(--gray);
+    }
+
+    /* ── CONTACT ── */
+    #contact {
+      background: #060e17;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #contact::before {
+      content: 'CONTACT';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 18vw;
+      color: rgba(59, 125, 196, 0.03);
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    .contact-content {
+      position: relative;
+      z-index: 1;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .contact-lead {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: var(--ice);
+      margin-bottom: 3rem;
+      font-style: italic;
+    }
+
+    .contact-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(59, 125, 196, 0.2);
+      margin-bottom: 3rem;
+    }
+
+    .contact-card {
+      background: #060e17;
+      padding: 2rem 1.5rem;
+      transition: background 0.3s;
+    }
+
+    .contact-card:hover {
+      background: rgba(42, 74, 110, 0.3);
+    }
+
+    .contact-card-icon {
+      font-size: 1.5rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .contact-card-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 0.4rem;
+    }
+
+    .contact-card-value {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy);
+      border-top: 1px solid rgba(59, 125, 196, 0.2);
+      padding: 2rem 5vw;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-brand {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 1.1rem;
+      color: var(--white);
+    }
+
+    .footer-brand span {
+      color: var(--sky);
+    }
+
+    .footer-copy {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      color: var(--gray);
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(to right, var(--sky), var(--gold));
+      margin-bottom: 2rem;
+    }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+
+      #apropos,
+      .engagement-content,
+      .expertise-layout {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .contact-cards {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .engagement-pillars {
+        grid-template-columns: 1fr;
+      }
+
+      .about-values {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 3rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#hero">ELVASTOR <span>BUILDING</span></a>
+    <ul class="nav-links">
+      <li><a href="#apropos">À Propos</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#expertises">Expertises</a></li>
+      <li><a href="#engagement">Engagement</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <!-- Left content panel -->
+    <div class="hero-left">
+      <div class="hero-tag">Société Marocaine &mdash;</div>
+      <h1>
+        Bâtir<br>
+        <span class="accent">L'Excellence</span><br>
+        <span class="line-gold">Au Maroc</span>
+      </h1>
+      <div class="hero-divider"></div>
+      <p class="hero-desc">
+        Spécialisée dans les travaux de bâtiment et de génie civil, ELVASTOR BUILDING réalise vos projets de
+        construction, rénovation et aménagement avec rigueur, qualité et respect des délais.
+      </p>
+      <div class="hero-cta">
+        <a href="#services" class="btn-primary">Nos Services</a>
+        <a href="#contact" class="btn-outline">Nous Contacter</a>
+      </div>
+      <div class="hero-stats-left">
+        <div class="stat-item">
+          <div class="stat-num">2024</div>
+          <div class="stat-label">Année de<br>création</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">15+</div>
+          <div class="stat-label">Corps de<br>métier</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">TCE</div>
+          <div class="stat-label">Tous corps<br>d&apos;état</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right visual panel -->
+    <div class="hero-right">
+      <div class="hero-right-bg"></div>
+      <div class="hero-grid-right"></div>
+
+      <!-- Architectural SVG illustration -->
+      <svg class="hero-arch-svg" viewBox="0 0 600 800" xmlns="http://www.w3.org/2000/svg"
+        preserveAspectRatio="xMidYMax slice"
+        style="position:absolute;inset:0;width:100%;height:100%;z-index:1;opacity:0.9">
+        <defs>
+          <linearGradient id="bldGrad1" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#3b7dc4" stop-opacity="0.9" />
+            <stop offset="100%" stop-color="#1a3d5c" stop-opacity="0.6" />
+          </linearGradient>
+          <linearGradient id="bldGrad2" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#2a5a8e" stop-opacity="0.85" />
+            <stop offset="100%" stop-color="#0d2033" stop-opacity="0.5" />
+          </linearGradient>
+          <linearGradient id="bldGrad3" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#4a8fd4" stop-opacity="0.95" />
+            <stop offset="100%" stop-color="#1e4a72" stop-opacity="0.6" />
+          </linearGradient>
+          <linearGradient id="groundGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#c9a84c" stop-opacity="0.7" />
+            <stop offset="100%" stop-color="#c9a84c" stop-opacity="0" />
+          </linearGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="3" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+
+        <!-- Ground line -->
+        <rect x="0" y="750" width="600" height="2" fill="url(#groundGrad)" opacity="0.8" />
+
+        <!-- Building B1 — far left short -->
+        <rect x="30" y="560" width="70" height="190" fill="url(#bldGrad2)" rx="1" />
+        <rect x="30" y="555" width="70" height="6" fill="#3b7dc4" opacity="0.8" />
+        <!-- windows -->
+        <rect x="42" y="580" width="12" height="16" fill="#8fb8d9" opacity="0.5" rx="1" />
+        <rect x="62" y="580" width="12" height="16" fill="#8fb8d9" opacity="0.3" rx="1" />
+        <rect x="82" y="580" width="12" height="16" fill="#8fb8d9" opacity="0.6" rx="1" />
+        <rect x="42" y="610" width="12" height="16" fill="#8fb8d9" opacity="0.4" rx="1" />
+        <rect x="62" y="610" width="12" height="16" fill="#c9a84c" opacity="0.5" rx="1" />
+        <rect x="82" y="610" width="12" height="16" fill="#8fb8d9" opacity="0.3" rx="1" />
+        <rect x="42" y="640" width="12" height="16" fill="#8fb8d9" opacity="0.6" rx="1" />
+        <rect x="62" y="640" width="12" height="16" fill="#8fb8d9" opacity="0.4" rx="1" />
+        <rect x="82" y="640" width="12" height="16" fill="#8fb8d9" opacity="0.5" rx="1" />
+        <rect x="42" y="670" width="12" height="16" fill="#8fb8d9" opacity="0.3" rx="1" />
+        <rect x="62" y="670" width="12" height="16" fill="#8fb8d9" opacity="0.5" rx="1" />
+        <rect x="82" y="670" width="12" height="16" fill="#8fb8d9" opacity="0.4" rx="1" />
+        <rect x="42" y="700" width="12" height="16" fill="#8fb8d9" opacity="0.5" rx="1" />
+        <rect x="62" y="700" width="12" height="16" fill="#8fb8d9" opacity="0.3" rx="1" />
+        <rect x="82" y="700" width="12" height="16" fill="#8fb8d9" opacity="0.6" rx="1" />
+
+        <!-- Building B2 — tall center-left -->
+        <rect x="120" y="280" width="110" height="470" fill="url(#bldGrad1)" rx="1" />
+        <rect x="120" y="272" width="110" height="10" fill="#4a8fd4" opacity="0.9" />
+        <!-- antenna -->
+        <rect x="172" y="230" width="3" height="42" fill="#3b7dc4" opacity="0.8" />
+        <circle cx="173" cy="228" r="5" fill="#c9a84c" opacity="0.9" filter="url(#glow)" />
+        <!-- windows grid -->
+        <rect x="132" y="300" width="14" height="18" fill="#8fb8d9" opacity="0.6" rx="1" />
+        <rect x="154" y="300" width="14" height="18" fill="#c9a84c" opacity="0.5" rx="1" />
+        <rect x="176" y="300" width="14" height="18" fill="#8fb8d9" opacity="0.7" rx="1" />
+        <rect x="198" y="300" width="14" height="18" fill="#8fb8d9" opacity="0.4" rx="1" />
+        <rect x="132" y="334" width="14" height="18" fill="#8fb8d9" opacity="0.5" rx="1" />
+        <rect x="154" y="334" width="14" height="18" fill="#8fb8d9" opacity="0.7" rx="1" />
+        <rect x="176" y="334" width="14" height="18" fill="#8fb8d9" opacity="0.3" rx="1" />
+        <rect x="198" y="334" width="14" height="18" fill="#c9a84c" opacity="0.5" rx="1" />
+        <rect x="132" y="368" width="14" height="18" fill="#8fb8d9" opacity="0.6" rx="1" />
+        <rect x="154" y="368" width="14" height="18" fill="#8fb8d9" opacity="0.4" rx="1" />
+        <rect x="176" y="368" width="14" height="18" fill="#8fb8d9" opacity="0.7" rx="1" />
+        <rect x="198" y="368" width="14" height="18" fill="#8fb8d9" opacity="0.5" rx="1" />
+        <rect x="132" y="402" width="14" height="18" fill="#c9a84c" opacity="0.4" rx="1" />
+        <rect x="154" y="402" width="14" height="18" fill="#8fb8d9" opacity="0.6" rx="1" />
+        <rect x="176" y="402" width="14" height="18" fill="#8fb8d9" opacity="0.5" rx="1" />
+        <rect x="198" y="402" width="14" height="18" fill="#8fb8d9" opacity="0.3" rx="1" />
+        <rect x="132" y="436" width="14" height="18" fill="#8fb8d9" opacity="0.6" rx="1" />
+        <rect x="154" y="436" width="14" height="18" fill="#8fb8d9" opacity="0.5" rx="1" />
+        <rect x="176" y="436" width="14" height="18" fill="#8fb8d9" opacity="0.7" rx="1" />
+        <rect x="198" y="436" width="14" height="18" fill="#8fb8d9" opacity="0.4" rx="1" />
+        <rect x="132" y="470" width="14" height="18" fill="#8fb8d9" opacity="0.4" rx="1" />
+        <rect x="154" y="470" width="14" height="18" fill="#c9a84c" opacity="0.4" rx="1" />
+        <rect x="176" y="470" width="14" height="18" fill="#8fb8d9" opacity="0.6" rx="1" />
+        <rect x="198" y="470" width="14" height="18" fill="#8fb8d9" opacity="0.5" rx="1" />
+        <rect x="132" y="504" width="14" height="18" fill="#8fb8d9" opacity="0.5" rx="1" />
+        <rect x="154" y="504" width="14" height="18" fill="#8fb8d9" opacity="0.6" rx="1" />
+        <rect x="176" y="504" width="14" height="18" fill="#8fb8d9" opacity="0.4" rx="1" />
+        <rect x="198" y="504" width="14" height="18" fill="#8fb8d9" opacity="0.7" rx="1" />
+        <rect x="132" y="538" width="14" height="18" fill="#8fb8d9" opacity="0.6" rx="1" />
+        <rect x="154" y="538" width="14" height="18" fill="#8fb8d9" opacity="0.3" rx="1" />
+        <rect x="176" y="538" width="14" height="18" fill="#c9a84c" opacity="0.4" rx="1" />
+        <rect x="198" y="538" width="14" height="18" fill="#8fb8d9" opacity="0.5" rx="1" />
+        <rect x="132" y="572" width="14" height="18" fill="#8fb8d9" opacity="0.5" rx="1" />
+        <rect x="154" y="572" width="14" height="18" fill="#8fb8d9" opacity="0.6" rx="1" />
+        <rect x="176" y="572" width="14" height="18" fill="#8fb8d9" opacity="0.4" rx="1" />
+        <rect x="198" y="572" width="14" height="18" fill="#8fb8d9" opacity="0.5" rx="1" />
+
+        <!-- Building B3 — tallest center (hero) -->
+        <rect x="255" y="120" width="130" height="630" fill="url(#bldGrad3)" rx="1" />
+        <rect x="255" y="110" width="130" height="12" fill="#5a9fe4" opacity="0.95" />
+        <!-- crown elements -->
+        <rect x="290" y="60" width="60" height="52" fill="url(#bldGrad3)" opacity="0.8" rx="1" />
+        <rect x="290" y="54" width="60" height="8" fill="#5a9fe4" opacity="0.9" />
+        <rect x="315" y="10" width="8" height="46" fill="#3b7dc4" opacity="0.9" />
+        <circle cx="319" cy="8" r="6" fill="#c9a84c" opacity="1" filter="url(#glow)" />
+        <!-- facade vertical lines -->
+        <rect x="300" y="120" width="2" height="630" fill="#1a3d5c" opacity="0.4" />
+        <rect x="340" y="120" width="2" height="630" fill="#1a3d5c" opacity="0.4" />
+        <!-- windows -->
+        <rect x="267" y="140" width="16" height="20" fill="#8fb8d9" opacity="0.7" rx="1" />
+        <rect x="292" y="140" width="16" height="20" fill="#c9a84c" opacity="0.6" rx="1" />
+        <rect x="317" y="140" width="16" height="20" fill="#8fb8d9" opacity="0.8" rx="1" />
+        <rect x="342" y="140" width="16" height="20" fill="#8fb8d9" opacity="0.5" rx="1" />
+        <rect x="367" y="140" width="16" height="20" fill="#8fb8d9" opacity="0.7" rx="1" />
+        <rect x="267" y="176" width="16" height="20" fill="#8fb8d9" opacity="0.5" rx="1" />
+        <rect x="292" y="176" width="16" height="20" fill="#8fb8d9" opacity="0.7" rx="1" />
+        <rect x="317" y="176" width="16" height="20" fill="#c9a84c" opacity="0.5" rx="1" />
+        <rect x="342" y="176" width="16" height="20" fill="#8fb8d9" opacity="0.6" rx="1" />
+        <rect x="367" y="176" width="16" height="20" fill="#8fb8d9" opacity="0.8" rx="1" />
+        <rect x="267" y="212" width="16" height="20" fill="#8fb8d9" opacity="0.7" rx="1" />
+        <rect x="292" y="212" width="16" height="20" fill="#8fb8d9" opacity="0.5" rx="1" />
+        <rect x="317" y="212" width="16" height="20" fill="#8fb8d9" opacity="0.7" rx="1" />
+        <rect x="342" y="212" width="16" height="20" fill="#8fb8d9" opacity="0.4" rx="1" />
+        <rect x="367" y="212" width="16" height="20" fill="#c9a84c" opacity="0.5" rx="1" />
+        <rect x="267" y="248" width="16" height="20" fill="#8fb8d9" opacity="0.6" rx="1" />
+        <rect x="292" y="248" width="16" height="20" fill="#8fb8d9" opacity="0.8" rx="1" />
+        <rect x="317" y="248" width="16" height="20" fill="#8fb8d9" opacity="0.5" rx="1" />
+        <rect x="342" y="248" width="16" height="20" fill="#8fb8d9" opacity="0.7" rx="1" />
+        <rect x="367" y="248" width="16" height="20" fill="#8fb8d9" opacity="0.6" rx="1" />
+        <rect x="267" y="284" width="16" height="20" fill="#c9a84c" opacity="0.4" rx="1" />
+        <rect x="292" y="284" width="16" height="20" fill="#8fb8d9" opacity="0.6" rx="1" />
+        <rect x="317" y="284" width="16" height="20" fill="#8fb8d9" opacity="0.7" rx="1" />
+        <rect x="342" y="284" width="16" height="20" fill="#8fb8d9" opacity="0.5" rx="1" />
+        <rect x="367" y="284" width="16" height="20" fill="#8fb8d9" opacity="0.6" rx="1" />
+        <rect x="267" y="320" width="16" height="20" fill="#8fb8d9" opacity="0.7" rx="1" />
+        <rect x="292" y="320" width="16" height="20" fill="#8fb8d9" opacity="0.4" rx="1" />
+        <rect x="317" y="320" width="16" height="20" fill="#c9a84c" opacity="0.5" rx="1" />
+        <rect x="342" y="320" width="16" height="20" fill="#8fb8d9" opacity="0.7" rx="1" />
+        <rect x="367" y="320" width="16" height="20" fill="#8fb8d9" opacity="0.5" rx="1" />
+        <rect x="267" y="356" width="16" height="20" fill="#8fb8d9" opacity="0.6" rx="1" />
+        <rect x="292" y="356" width="16" height="20" fill="#8fb8d9" opacity="0.7" rx="1" />
+        <rect x="317" y="356" width="16" height="20" fill="#8fb8d9" opacity="0.5" rx="1" />
+        <rect x="342" y="356" width="16" height="20" fill="#8fb8d9" opacity="0.6" rx="1" />
+        <rect x="367" y="356" width="16" height="20" fill="#8fb8d9" opacity="0.4" rx="1" />
+        <rect x="267" y="392" width="16" height="20" fill="#8fb8d9" opacity="0.7" rx="1" />
+        <rect x="292" y="392" width="16" height="20" fill="#8fb8d9" opacity="0.5" rx="1" />
+        <rect x="317" y="392" width="16" height="20" fill="#8fb8d9" opacity="0.8" rx="1" />
+        <rect x="342" y="392" width="16" height="20" fill="#c9a84c" opacity="0.4" rx="1" />
+        <rect x="367" y="392" width="16" height="20" fill="#8fb8d9" opacity="0.6" rx="1" />
+        <rect x="267" y="428" width="16" height="20" fill="#8fb8d9" opacity="0.5" rx="1" />
+        <rect x="292" y="428" width="16" height="20" fill="#8fb8d9" opacity="0.6" rx="1" />
+        <rect x="317" y="428" width="16" height="20" fill="#8fb8d9" opacity="0.4" rx="1" />
+        <rect x="342" y="428" width="16" height="20" fill="#8fb8d9" opacity="0.7" rx="1" />
+        <rect x="367" y="428" width="16" height="20" fill="#8fb8d9" opacity="0.5" rx="1" />
+
+        <!-- Building B4 — right mid -->
+        <rect x="410" y="360" width="90" height="390" fill="url(#bldGrad2)" rx="1" />
+        <rect x="410" y="353" width="90" height="9" fill="#3b7dc4" opacity="0.85" />
+        <rect x="418" y="375" width="12" height="16" fill="#8fb8d9" opacity="0.6" rx="1" />
+        <rect x="438" y="375" width="12" height="16" fill="#8fb8d9" opacity="0.4" rx="1" />
+        <rect x="458" y="375" width="12" height="16" fill="#c9a84c" opacity="0.5" rx="1" />
+        <rect x="478" y="375" width="12" height="16" fill="#8fb8d9" opacity="0.6" rx="1" />
+        <rect x="418" y="405" width="12" height="16" fill="#8fb8d9" opacity="0.5" rx="1" />
+        <rect x="438" y="405" width="12" height="16" fill="#8fb8d9" opacity="0.6" rx="1" />
+        <rect x="458" y="405" width="12" height="16" fill="#8fb8d9" opacity="0.4" rx="1" />
+        <rect x="478" y="405" width="12" height="16" fill="#8fb8d9" opacity="0.7" rx="1" />
+        <rect x="418" y="435" width="12" height="16" fill="#c9a84c" opacity="0.4" rx="1" />
+        <rect x="438" y="435" width="12" height="16" fill="#8fb8d9" opacity="0.5" rx="1" />
+        <rect x="458" y="435" width="12" height="16" fill="#8fb8d9" opacity="0.7" rx="1" />
+        <rect x="478" y="435" width="12" height="16" fill="#8fb8d9" opacity="0.5" rx="1" />
+        <rect x="418" y="465" width="12" height="16" fill="#8fb8d9" opacity="0.6" rx="1" />
+        <rect x="438" y="465" width="12" height="16" fill="#8fb8d9" opacity="0.4" rx="1" />
+        <rect x="458" y="465" width="12" height="16" fill="#8fb8d9" opacity="0.6" rx="1" />
+        <rect x="478" y="465" width="12" height="16" fill="#c9a84c" opacity="0.4" rx="1" />
+        <rect x="418" y="495" width="12" height="16" fill="#8fb8d9" opacity="0.5" rx="1" />
+        <rect x="438" y="495" width="12" height="16" fill="#8fb8d9" opacity="0.7" rx="1" />
+        <rect x="458" y="495" width="12" height="16" fill="#8fb8d9" opacity="0.4" rx="1" />
+        <rect x="478" y="495" width="12" height="16" fill="#8fb8d9" opacity="0.6" rx="1" />
+        <rect x="418" y="525" width="12" height="16" fill="#8fb8d9" opacity="0.6" rx="1" />
+        <rect x="438" y="525" width="12" height="16" fill="#8fb8d9" opacity="0.5" rx="1" />
+        <rect x="458" y="525" width="12" height="16" fill="#8fb8d9" opacity="0.7" rx="1" />
+        <rect x="478" y="525" width="12" height="16" fill="#8fb8d9" opacity="0.3" rx="1" />
+
+        <!-- Building B5 — far right -->
+        <rect x="520" y="470" width="70" height="280" fill="url(#bldGrad1)" opacity="0.75" rx="1" />
+        <rect x="520" y="463" width="70" height="9" fill="#4a8fd4" opacity="0.7" />
+        <rect x="530" y="485" width="10" height="14" fill="#8fb8d9" opacity="0.5" rx="1" />
+        <rect x="548" y="485" width="10" height="14" fill="#8fb8d9" opacity="0.4" rx="1" />
+        <rect x="566" y="485" width="10" height="14" fill="#c9a84c" opacity="0.4" rx="1" />
+        <rect x="530" y="510" width="10" height="14" fill="#8fb8d9" opacity="0.6" rx="1" />
+        <rect x="548" y="510" width="10" height="14" fill="#8fb8d9" opacity="0.3" rx="1" />
+        <rect x="566" y="510" width="10" height="14" fill="#8fb8d9" opacity="0.5" rx="1" />
+        <rect x="530" y="535" width="10" height="14" fill="#8fb8d9" opacity="0.4" rx="1" />
+        <rect x="548" y="535" width="10" height="14" fill="#8fb8d9" opacity="0.6" rx="1" />
+        <rect x="566" y="535" width="10" height="14" fill="#8fb8d9" opacity="0.4" rx="1" />
+
+        <!-- Foreground road/ground -->
+        <rect x="0" y="752" width="600" height="48" fill="#071015" opacity="0.8" />
+        <rect x="0" y="750" width="600" height="4" fill="#c9a84c" opacity="0.3" />
+
+        <!-- Light glow at base of main building -->
+        <ellipse cx="320" cy="752" rx="90" ry="12" fill="#3b7dc4" opacity="0.15" />
+      </svg>
+
+      <!-- Floating badge -->
+      <div class="hero-badge">
+        <div class="hero-badge-num">TCE</div>
+        <div class="hero-badge-label">Tous Corps<br>d&apos;État</div>
+      </div>
+
+      <!-- Scroll hint -->
+      <div class="hero-scroll">
+        <div class="hero-scroll-line"></div>
+        Défiler
+      </div>
+    </div>
+  </section>
+
+  <!-- À PROPOS -->
+  <section id="apropos">
+    <div class="about-visual reveal">
+      <div class="about-card">
+       
+      </div>
+      <div class="about-values">
+        <div class="value-item">
+          <div class="value-icon">🏗️</div>
+          <div class="value-label">Construction tous corps d'état</div>
+        </div>
+        <div class="value-item">
+          <div class="value-icon">🔧</div>
+          <div class="value-label">Rénovation & aménagement</div>
+        </div>
+        <div class="value-item">
+          <div class="value-icon">💧</div>
+          <div class="value-label">Plomberie & assainissement</div>
+        </div>
+        <div class="value-item">
+          <div class="value-icon">🏛️</div>
+          <div class="value-label">Génie civil & VRD</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-text reveal">
+      <div class="section-tag">À Propos</div>
+      <h2>Une Expertise<br><span>Complète</span></h2>
+      <div class="divider"></div>
+      <p>
+        ELVASTOR BUILDING est une société marocaine créée en 2024, spécialisée dans les travaux de bâtiment et de génie
+        civil. Elle intervient dans plusieurs domaines de la construction, notamment les travaux d'aménagement, de
+        construction, de rénovation et de décoration intérieure et extérieure.
+      </p>
+      <p>
+        La société réalise également des travaux d'adduction d'eau, de plomberie sanitaire, d'assainissement ainsi que
+        divers travaux de génie civil. Ses activités couvrent aussi les travaux de nettoyage et d'entretien des locaux
+        publics et privés.
+      </p>
+      <p>
+        Grâce à une équipe qualifiée et à son savoir-faire technique, ELVASTOR BUILDING assure l'exécution de projets de
+        bâtiment tous corps d'état avec une rigueur exemplaire et une attention permanente aux exigences de ses clients.
+      </p>
+      <a href="#contact" class="btn-primary" style="margin-top:1rem;">Demander un Devis</a>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="services-header reveal">
+      <div class="section-tag" style="justify-content:center;">Nos Services</div>
+      <h2>Ce Que Nous<br><span>Réalisons</span></h2>
+      <div class="divider" style="margin:0 auto 1.5rem;"></div>
+      <p style="color:var(--gray);font-size:0.9rem;line-height:1.7;">
+        Un spectre complet de prestations pour répondre à tous vos projets de construction et d'aménagement.
+      </p>
+    </div>
+
+    <div class="services-grid reveal">
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <div class="service-icon">🏠</div>
+        <div class="service-title">Construction & Bâtiment</div>
+        <div class="service-desc">Réalisation de projets de construction neuve, tous corps d'état, du terrassement à la
+          finition.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <div class="service-icon">🔨</div>
+        <div class="service-title">Rénovation & Réhabilitation</div>
+        <div class="service-desc">Travaux de rénovation intérieure et extérieure, mise aux normes, transformation
+          d'espaces.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <div class="service-icon">🎨</div>
+        <div class="service-title">Décoration & Finitions</div>
+        <div class="service-desc">Peinture, carrelage, mosaïque, vitrerie, menuiserie — des finitions soignées qui
+          subliment vos espaces.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">04</div>
+        <div class="service-icon">💧</div>
+        <div class="service-title">Plomberie & Assainissement</div>
+        <div class="service-desc">Adduction d'eau, plomberie sanitaire, réseaux d'assainissement et travaux
+          d'étanchéité.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">05</div>
+        <div class="service-icon">⚡</div>
+        <div class="service-title">Électricité & Climatisation</div>
+        <div class="service-desc">Électricité générale, éclairage public, froid et climatisation pour locaux
+          résidentiels et professionnels.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">06</div>
+        <div class="service-icon">🧹</div>
+        <div class="service-title">Entretien & Nettoyage</div>
+        <div class="service-desc">Nettoyage et entretien de locaux publics et privés, maintenance régulière pour la
+          durabilité de vos biens.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERTISES -->
+  <section id="expertises">
+    <div class="expertise-layout">
+      <div class="about-text reveal">
+        <div class="section-tag">Domaines d'expertise</div>
+        <h2>Maîtrise<br><span>Technique</span></h2>
+        <div class="divider"></div>
+        <div class="expertise-list">
+          <div class="exp-item">
+            <div class="exp-dot"></div>
+            <div class="exp-name">Voirie et Réseaux Divers (VRD)</div>
+          </div>
+          <div class="exp-item">
+            <div class="exp-dot"></div>
+            <div class="exp-name">Terrassement</div>
+          </div>
+          <div class="exp-item">
+            <div class="exp-dot"></div>
+            <div class="exp-name">Plomberie sanitaire</div>
+          </div>
+          <div class="exp-item">
+            <div class="exp-dot"></div>
+            <div class="exp-name">Menuiserie</div>
+          </div>
+          <div class="exp-item">
+            <div class="exp-dot"></div>
+            <div class="exp-name">Peinture</div>
+          </div>
+          <div class="exp-item">
+            <div class="exp-dot"></div>
+            <div class="exp-name">Vitrerie</div>
+          </div>
+          <div class="exp-item">
+            <div class="exp-dot"></div>
+            <div class="exp-name">Carrelage & Mosaïque</div>
+          </div>
+          <div class="exp-item">
+            <div class="exp-dot"></div>
+            <div class="exp-name">Étanchéité</div>
+          </div>
+          <div class="exp-item">
+            <div class="exp-dot"></div>
+            <div class="exp-name">Construction métallique</div>
+          </div>
+          <div class="exp-item">
+            <div class="exp-dot"></div>
+            <div class="exp-name">Froid & Climatisation</div>
+          </div>
+          <div class="exp-item">
+            <div class="exp-dot"></div>
+            <div class="exp-name">Électricité générale</div>
+          </div>
+          <div class="exp-item">
+            <div class="exp-dot"></div>
+            <div class="exp-name">Éclairage public</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="expertise-visual reveal">
+        <div class="exp-showcase">
+          <div class="exp-showcase-title">Capacités Techniques</div>
+          <div class="exp-showcase-sub">Évaluation de nos niveaux d'expertise par domaine</div>
+          <div class="exp-bars">
+            <div class="exp-bar-item">
+              <div class="exp-bar-label">Gros Œuvre <span>95%</span></div>
+              <div class="exp-bar-track">
+                <div class="exp-bar-fill" style="width:95%;animation-delay:0.1s"></div>
+              </div>
+            </div>
+            <div class="exp-bar-item">
+              <div class="exp-bar-label">Second Œuvre <span>90%</span></div>
+              <div class="exp-bar-track">
+                <div class="exp-bar-fill" style="width:90%;animation-delay:0.25s"></div>
+              </div>
+            </div>
+            <div class="exp-bar-item">
+              <div class="exp-bar-label">Génie Civil <span>88%</span></div>
+              <div class="exp-bar-track">
+                <div class="exp-bar-fill" style="width:88%;animation-delay:0.4s"></div>
+              </div>
+            </div>
+            <div class="exp-bar-item">
+              <div class="exp-bar-label">Plomberie & Sanitaire <span>92%</span></div>
+              <div class="exp-bar-track">
+                <div class="exp-bar-fill" style="width:92%;animation-delay:0.55s"></div>
+              </div>
+            </div>
+            <div class="exp-bar-item">
+              <div class="exp-bar-label">Électricité <span>85%</span></div>
+              <div class="exp-bar-track">
+                <div class="exp-bar-fill" style="width:85%;animation-delay:0.7s"></div>
+              </div>
+            </div>
+            <div class="exp-bar-item">
+              <div class="exp-bar-label">Décoration & Finitions <span>93%</span></div>
+              <div class="exp-bar-track">
+                <div class="exp-bar-fill" style="width:93%;animation-delay:0.85s"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ENGAGEMENT -->
+  <section id="engagement">
+    <div class="engagement-bg"></div>
+    <div class="engagement-content">
+      <div class="engagement-text reveal">
+        <div class="section-tag">Notre Engagement</div>
+        <h2>Qualité &<br><span>Confiance</span></h2>
+        <div class="divider"></div>
+        <p>
+          Depuis sa création, ELVASTOR BUILDING s'engage à fournir des prestations de qualité tout en respectant les
+          normes techniques, les délais d'exécution et les exigences de ses clients.
+        </p>
+        <p>
+          Notre approche repose sur une relation de confiance durable avec chaque client, une communication transparente
+          à toutes les étapes du projet, et un suivi rigoureux jusqu'à la livraison finale.
+        </p>
+        <a href="#contact" class="btn-primary" style="margin-top:1rem;">Démarrer un Projet</a>
+      </div>
+
+      <div class="engagement-pillars reveal">
+        <div class="pillar">
+          <div class="pillar-icon">🏆</div>
+          <div class="pillar-title">Qualité</div>
+          <div class="pillar-desc">Des matériaux sélectionnés et des méthodes éprouvées pour des réalisations durables.
+          </div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">⏱️</div>
+          <div class="pillar-title">Délais</div>
+          <div class="pillar-desc">Respect strict des plannings pour livrer vos projets dans les temps convenus.</div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">📐</div>
+          <div class="pillar-title">Normes</div>
+          <div class="pillar-desc">Conformité aux normes techniques et réglementaires en vigueur au Maroc.</div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">🤝</div>
+          <div class="pillar-title">Proximité</div>
+          <div class="pillar-desc">Une écoute attentive et un accompagnement personnalisé à chaque étape.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-content reveal">
+      <div class="section-tag" style="justify-content:center;">Contact</div>
+      <h2>Parlons de<br><span>Votre Projet</span></h2>
+      <div class="divider" style="margin:0 auto 2rem;"></div>
+      <p class="contact-lead">
+        Vous avez un projet de construction, de rénovation ou d'aménagement ? Notre équipe est à votre disposition pour
+        étudier vos besoins et vous proposer une solution adaptée.
+      </p>
+
+      <div class="contact-cards">
+        <div class="contact-card">
+          <div class="contact-card-icon">📍</div>
+          <div class="contact-card-label">Adresse</div>
+          <div class="contact-card-value">Maroc</div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-card-icon">📧</div>
+          <div class="contact-card-label">Email</div>
+          <div class="contact-card-value">elvastorbuilding@gmail.com</div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-card-icon">📞</div>
+          <div class="contact-card-label">Téléphone / WhatsApp</div>
+          <div class="contact-card-value">+212 601 496 528</div>
+        </div>
+      </div>
+
+      <button class="btn-primary" onclick="openModal()">📩 Envoyer un Message</button>
+    </div>
+  </section>
+
+  <!-- MODAL -->
+  <div id="contactModal" style="
+  display:none; position:fixed; inset:0; z-index:500;
+  background:rgba(6,14,23,0.92); backdrop-filter:blur(8px);
+  align-items:center; justify-content:center;
+">
+    <div style="
+    background:linear-gradient(135deg,#1a3350,#0d1b2a);
+    border:1px solid rgba(59,125,196,0.35);
+    max-width:520px; width:90%; padding:2.5rem;
+    position:relative;
+  ">
+      <!-- Corner accents -->
+      <span
+        style="position:absolute;top:-2px;left:-2px;width:40px;height:40px;border-top:2px solid var(--gold);border-left:2px solid var(--gold);"></span>
+      <span
+        style="position:absolute;bottom:-2px;right:-2px;width:40px;height:40px;border-bottom:2px solid var(--sky);border-right:2px solid var(--sky);"></span>
+
+      <button onclick="closeModal()" style="
+      position:absolute;top:1rem;right:1rem;
+      background:none;border:none;color:var(--gray);
+      font-size:1.4rem;cursor:pointer;line-height:1;
+    ">✕</button>
+
+      <div
+        style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;">
+        Votre Message</div>
+      <h3
+        style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:1.7rem;text-transform:uppercase;color:var(--white);margin-bottom:0.4rem;">
+        Contacter ELVASTOR</h3>
+      <p style="font-size:0.82rem;color:var(--gray);margin-bottom:1.8rem;">Personnalisez votre message puis envoyez-le
+        directement via WhatsApp.</p>
+
+      <label
+        style="font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ice);display:block;margin-bottom:0.5rem;">Votre
+        nom</label>
+      <input id="clientName" type="text" placeholder="ex: Mohammed Alami"
+        style="width:100%;background:rgba(59,125,196,0.08);border:1px solid rgba(59,125,196,0.25);color:var(--white);padding:0.8rem 1rem;font-family:'Lora',serif;font-size:0.9rem;margin-bottom:1.2rem;outline:none;transition:border-color 0.3s;"
+        onfocus="this.style.borderColor='var(--sky)'" onblur="this.style.borderColor='rgba(59,125,196,0.25)'" />
+
+      <label
+        style="font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ice);display:block;margin-bottom:0.5rem;">Type
+        de projet</label>
+      <select id="projectType" onchange="updateMessage()"
+        style="width:100%;background:#0d1b2a;border:1px solid rgba(59,125,196,0.25);color:var(--white);padding:0.8rem 1rem;font-family:'Lora',serif;font-size:0.9rem;margin-bottom:1.2rem;outline:none;cursor:pointer;">
+        <option value="construction">Construction neuve</option>
+        <option value="renovation">Rénovation / Réhabilitation</option>
+        <option value="amenagement">Aménagement intérieur</option>
+        <option value="plomberie">Plomberie / Assainissement</option>
+        <option value="electricite">Électricité / Climatisation</option>
+        <option value="genie">Génie civil / VRD</option>
+        <option value="autre">Autre demande</option>
+      </select>
+
+      <label
+        style="font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ice);display:block;margin-bottom:0.5rem;">Aperçu
+        du message</label>
+      <textarea id="msgPreview" rows="6"
+        style="width:100%;background:rgba(59,125,196,0.06);border:1px solid rgba(59,125,196,0.2);color:var(--ice);padding:1rem;font-family:'Lora',serif;font-size:0.85rem;line-height:1.6;resize:vertical;outline:none;margin-bottom:1.5rem;"></textarea>
+
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+        <button onclick="sendWhatsApp()" class="btn-primary"
+          style="flex:1;text-align:center;border:none;cursor:pointer;">
+          💬 Envoyer via WhatsApp
+        </button>
+        <button onclick="closeModal()" class="btn-outline" style="flex:1;text-align:center;cursor:pointer;">
+          Annuler
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openModal()
+    {
+      document.getElementById('contactModal').style.display = 'flex';
+      updateMessage();
+    }
+    function closeModal()
+    {
+      document.getElementById('contactModal').style.display = 'none';
+    }
+
+    const projectLabels = {
+      construction: 'un projet de construction neuve',
+      renovation: 'des travaux de rénovation / réhabilitation',
+      amenagement: 'un aménagement intérieur',
+      plomberie: 'des travaux de plomberie / assainissement',
+      electricite: 'des travaux d\'électricité / climatisation',
+      genie: 'des travaux de génie civil / VRD',
+      autre: 'une demande de renseignements'
+    };
+
+    function updateMessage()
+    {
+      const name = document.getElementById('clientName').value.trim() || '[Votre Nom]';
+      const type = document.getElementById('projectType').value;
+      const label = projectLabels[type];
+      const msg =
+        `Bonjour,
+
+Je me permets de vous contacter suite à la visite de votre site web. Je suis intéressé(e) par vos services concernant ${label}.
+
+Je souhaiterais obtenir plus d'informations ainsi qu'un devis pour mon projet.
+
+Pourriez-vous me contacter afin que nous puissions discuter des détails ?
+
+Cordialement,
+${name}`;
+      document.getElementById('msgPreview').value = msg;
+    }
+
+    document.getElementById('clientName').addEventListener('input', updateMessage);
+    document.getElementById('projectType').addEventListener('change', updateMessage);
+
+    function sendWhatsApp()
+    {
+      const msg = document.getElementById('msgPreview').value;
+      const encoded = encodeURIComponent(msg);
+      window.open('https://wa.me/212601496528?text=' + encoded, '_blank');
+    }
+
+    // Close modal on backdrop click
+    document.getElementById('contactModal').addEventListener('click', function (e)
+    {
+      if (e.target === this) closeModal();
+    });
+  </script>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand">ELVASTOR <span>BUILDING</span></div>
+    <div class="footer-copy">© 2024 ELVASTOR BUILDING — Société de Construction et Travaux Divers</div>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) =>
+    {
+      entries.forEach((entry, i) =>
+      {
+        if (entry.isIntersecting)
+        {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+
+    // Nav highlight on scroll
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    window.addEventListener('scroll', () =>
+    {
+      let current = '';
+      sections.forEach(s =>
+      {
+        if (window.scrollY >= s.offsetTop - 120) current = s.id;
+      });
+      navLinks.forEach(a =>
+      {
+        a.style.color = a.getAttribute('href') === '#' + current ? 'var(--gold)' : '';
+      });
+    });
+  </script>
+</body>
+
+</html>
